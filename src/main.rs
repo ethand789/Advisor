@@ -2,35 +2,25 @@ use std::io;
 
 fn main() {
     let mut input = String::new();
-    let last_command = String::from("begin new game");
-    let exit_phrase = "exit";
+    let exit_phrase = String::from("exit");
+    let mut command_list:Vec<String> = Vec::new();
 
-    while(last_command != exit_phrase){
+    while(String::from(command_list.last().unwrap()) != exit_phrase){ //exiting while loop terminates program
 
-        //TODO: create command reader
-
-        println!("please enter your next command (enter '{}' to exit)", exit_phrase);
+        println!("please enter your next command (enter '{}' to exit)", exit_phrase); //get input from user
         io::stdin()
             .read_line(&mut input)
             .expect("Could not read command");
 
-        let last_command = last_input(input.clone());
+        command_list.push(String::from(input.trim())); //add last command to command_list
 
-        print!("{} \n\n last command: {}",input,last_command);
+        input = String::new(); //clear input buffer
 
+       for x in command_list.iter(){ //print all commands in command_list
+           println!("{}",x);
+       }
+        print!("\n\n last command: {}",command_list.last().unwrap()); //print last command in command_list
     }
 }
 
-fn last_input(input:String) -> String {
-    let mut line = input.lines();
-    let mut next = line.next();
-    let last = "if you see this text, Ethan fucked up";
-
-
-    while next != None{
-        let last: Option<String> = next.map(|s| s.to_string());
-        next = line.next();
-    }
-    return String::from(last);
-}
 
